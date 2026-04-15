@@ -99,6 +99,22 @@ export const transactions = [
   { id: "t8", day: 8, merchant: "Rappi", amount: 15700, category: "comida", card: "Master 7891", time: "21:44" },
 ]
 
+const dailySpend = [
+  8200, 15400, 9900, 12200, 18600, 24500, 15100, 15700, 10400, 12800, 21400, 6200, 31800, 45000, 40250,
+]
+
+export const spendingTrend = Array.from({ length: 30 }, (_, index) => {
+  const day = index + 1
+  const actual = dailySpend.slice(0, day).reduce((total, amount) => total + amount, 0)
+  const projected = Math.round((spendingSummary.projectedSpend / 30) * day)
+
+  return {
+    day,
+    actual: day <= dailySpend.length ? actual : null,
+    projected,
+  }
+})
+
 export const calendarDays = Array.from({ length: 30 }, (_, index) => {
   const day = index + 1
   const dayTransactions = transactions.filter((transaction) => transaction.day === day)

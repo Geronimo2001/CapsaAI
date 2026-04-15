@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { Bell, CalendarDays, ChevronRight, CreditCard, Gauge, MapPin, Sparkles, Target } from "lucide-react"
+import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 import { BottomNav } from "@/components/dashboard/bottom-nav"
 import {
   categorySpend,
@@ -9,6 +10,7 @@ import {
   formatCurrency,
   getCategory,
   linkedCards,
+  spendingTrend,
   spendingSummary,
   subscriptions,
 } from "@/lib/capsa-data"
@@ -73,6 +75,83 @@ export default function HomePage() {
                 <p className="text-lg font-semibold">{formatCurrency(spendingSummary.dailyAverage)}</p>
                 <p className="text-xs text-muted-foreground">ultimos 15 dias</p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="px-5 pt-5">
+          <div className="rounded-lg border border-border bg-card p-4">
+            <div className="mb-4 flex items-start justify-between gap-3">
+              <div>
+                <h2 className="text-base font-semibold">Linea temporal</h2>
+                <p className="mt-1 text-xs text-muted-foreground">Gasto acumulado real vs cierre proyectado</p>
+              </div>
+              <div className="text-right">
+                <p className="text-xs text-muted-foreground">Dia 30</p>
+                <p className="text-sm font-semibold">{formatCompact(spendingSummary.projectedSpend)}</p>
+              </div>
+            </div>
+
+            <div className="h-48">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={spendingTrend} margin={{ top: 8, right: 4, bottom: 0, left: 4 }}>
+                  <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
+                  <XAxis
+                    dataKey="day"
+                    axisLine={false}
+                    tickLine={false}
+                    ticks={[1, 5, 10, 15, 20, 25, 30]}
+                    tick={{ fill: "rgba(255,255,255,0.48)", fontSize: 11 }}
+                  />
+                  <YAxis hide domain={[0, "dataMax + 20000"]} />
+                  <Tooltip
+                    cursor={{ stroke: "rgba(255,255,255,0.16)", strokeWidth: 1 }}
+                    formatter={(value, name) => [
+                      formatCurrency(Number(value)),
+                      name === "actual" ? "Real" : "Proyectada",
+                    ]}
+                    labelFormatter={(day) => `Dia ${day}`}
+                    contentStyle={{
+                      background: "#1f1f1f",
+                      border: "1px solid rgba(255,255,255,0.12)",
+                      borderRadius: 8,
+                      color: "#f4f4f4",
+                      fontSize: 12,
+                    }}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="projected"
+                    stroke="#ff8a5b"
+                    strokeDasharray="4 5"
+                    strokeWidth={2}
+                    dot={false}
+                    activeDot={{ r: 4 }}
+                    isAnimationActive={false}
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="actual"
+                    stroke="#5ee6a8"
+                    strokeWidth={3}
+                    dot={false}
+                    activeDot={{ r: 5 }}
+                    connectNulls={false}
+                    isAnimationActive={false}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+
+            <div className="mt-3 flex items-center justify-between text-xs">
+              <span className="flex items-center gap-2 text-muted-foreground">
+                <span className="size-2 rounded-full bg-primary" />
+                Linea real
+              </span>
+              <span className="flex items-center gap-2 text-muted-foreground">
+                <span className="h-0.5 w-5 border-t border-dashed border-[#ff8a5b]" />
+                Linea proyectada
+              </span>
             </div>
           </div>
         </section>
