@@ -21,13 +21,13 @@ export default function HomePage() {
   const subscriptionTotal = subscriptions.reduce((total, subscription) => total + subscription.amount, 0)
 
   return (
-    <main className="min-h-screen bg-background pb-28 text-foreground">
-      <div className="mx-auto max-w-md">
-        <header className="sticky top-0 z-40 bg-background/92 px-5 pb-3 pt-4 backdrop-blur">
+    <main className="min-h-screen bg-background pb-28 text-foreground md:pb-10 md:pl-24">
+      <div className="mx-auto max-w-md md:grid md:max-w-6xl md:grid-cols-12 md:gap-5 md:px-8">
+        <header className="sticky top-0 z-40 bg-background/92 px-5 pb-3 pt-4 backdrop-blur md:static md:col-span-12 md:bg-transparent md:px-0 md:pb-1 md:pt-8 md:backdrop-blur-none">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs text-muted-foreground">CapsaAI</p>
-              <h1 className="text-xl font-semibold">Inicio</h1>
+              <h1 className="text-xl font-semibold md:text-3xl">Inicio</h1>
             </div>
             <Link
               href="/alertas"
@@ -40,7 +40,7 @@ export default function HomePage() {
           </div>
         </header>
 
-        <section className="px-5 pt-2">
+        <section className="px-5 pt-2 md:col-span-5 md:px-0 md:pt-0">
           <div className="rounded-lg border border-border bg-card p-4">
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -79,7 +79,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="px-5 pt-5">
+        <section className="px-5 pt-5 md:col-span-7 md:px-0 md:pt-0">
           <div className="rounded-lg border border-border bg-card p-4">
             <div className="mb-4 flex items-start justify-between gap-3">
               <div>
@@ -92,7 +92,7 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="h-48">
+            <div className="h-48 md:h-[252px]">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={spendingTrend} margin={{ top: 8, right: 4, bottom: 0, left: 4 }}>
                   <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
@@ -156,7 +156,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="px-5 pt-5">
+        <section className="px-5 pt-5 md:col-span-12 md:px-0">
           <div className="flex items-center gap-3 rounded-lg border border-primary/25 bg-primary/10 p-3">
             <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/20">
               <Sparkles className="size-5 text-primary" />
@@ -165,14 +165,14 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="pt-5">
-          <div className="mb-3 flex items-center justify-between px-5">
+        <section className="pt-5 md:col-span-12">
+          <div className="mb-3 flex items-center justify-between px-5 md:px-0">
             <h2 className="text-base font-semibold">Categorias que mueven el mes</h2>
             <Link href="/gastos" className="text-xs font-medium text-primary">
               Ver gastos
             </Link>
           </div>
-          <div className="flex gap-2 overflow-x-auto px-5 pb-1 scrollbar-hide">
+          <div className="flex gap-2 overflow-x-auto px-5 pb-1 scrollbar-hide md:grid md:grid-cols-6 md:overflow-visible md:px-0">
             {categorySpend.slice(0, 6).map((item) => {
               const category = getCategory(item.key)
               const Icon = category.icon
@@ -181,7 +181,7 @@ export default function HomePage() {
                 <Link
                   key={item.key}
                   href="/gastos"
-                  className="min-w-32 rounded-lg border border-border bg-card p-3"
+                  className="min-w-32 rounded-lg border border-border bg-card p-3 md:min-w-0"
                 >
                   <div className="flex items-center justify-between">
                     <span className="flex size-8 items-center justify-center rounded-lg bg-secondary">
@@ -197,7 +197,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="px-5 pt-5">
+        <section className="px-5 pt-5 md:col-span-6 md:px-0">
           <div className="mb-3 flex items-center justify-between">
             <h2 className="text-base font-semibold">Tarjetas vinculadas</h2>
             <span className="text-xs text-muted-foreground">{linkedCards.length} activas</span>
@@ -228,7 +228,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="px-5 pt-5">
+        <section className="px-5 pt-5 md:col-span-6 md:px-0">
           <div className="mb-3 flex items-center justify-between">
             <h2 className="text-base font-semibold">Suscripciones</h2>
             <span className="text-xs font-medium text-primary">{formatCurrency(subscriptionTotal)}/mes</span>
@@ -252,7 +252,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="px-5 pt-5">
+        <section className="px-5 pt-5 md:col-span-6 md:px-0">
           <Link
             href="/cerca"
             className="flex items-center justify-between rounded-lg border border-border bg-card p-4"
@@ -270,7 +270,7 @@ export default function HomePage() {
           </Link>
         </section>
 
-        <section className="px-5 pt-5">
+        <section className="px-5 pt-5 md:col-span-6 md:px-0">
           <Link
             href="/perfil"
             className="flex items-center justify-between rounded-lg border border-border bg-card p-4"

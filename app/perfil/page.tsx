@@ -6,14 +6,14 @@ export default function PerfilPage() {
   const PrivacyIcon = profileSettings.privacyIcon
 
   return (
-    <main className="min-h-screen bg-background pb-28 text-foreground">
-      <div className="mx-auto max-w-md">
-        <header className="sticky top-0 z-40 bg-background/92 px-5 pb-3 pt-4 backdrop-blur">
+    <main className="min-h-screen bg-background pb-28 text-foreground md:pb-10 md:pl-24">
+      <div className="mx-auto max-w-md md:grid md:max-w-5xl md:grid-cols-12 md:gap-5 md:px-8">
+        <header className="sticky top-0 z-40 bg-background/92 px-5 pb-3 pt-4 backdrop-blur md:static md:col-span-12 md:bg-transparent md:px-0 md:pb-1 md:pt-8 md:backdrop-blur-none">
           <p className="text-xs text-muted-foreground">CapsaAI</p>
-          <h1 className="text-xl font-semibold">Perfil</h1>
+          <h1 className="text-xl font-semibold md:text-3xl">Perfil</h1>
         </header>
 
-        <section className="px-5 pt-2">
+        <section className="px-5 pt-2 md:col-span-4 md:px-0 md:pt-0">
           <div className="flex items-center gap-3 rounded-lg border border-border bg-card p-4">
             <div className="flex size-12 items-center justify-center rounded-lg bg-primary text-lg font-semibold text-primary-foreground">
               G
@@ -25,7 +25,7 @@ export default function PerfilPage() {
           </div>
         </section>
 
-        <section className="px-5 pt-5">
+        <section className="px-5 pt-5 md:col-span-8 md:px-0 md:pt-0">
           <h2 className="mb-3 text-base font-semibold">Presupuesto</h2>
           <div className="rounded-lg border border-border bg-card p-4">
             <div className="flex items-start justify-between gap-3">
@@ -47,7 +47,7 @@ export default function PerfilPage() {
           </div>
         </section>
 
-        <section className="px-5 pt-5">
+        <section className="px-5 pt-5 md:col-span-6 md:px-0">
           <h2 className="mb-3 text-base font-semibold">Tarjetas</h2>
           <div className="space-y-2">
             {linkedCards.map((card) => (
@@ -67,7 +67,7 @@ export default function PerfilPage() {
           </div>
         </section>
 
-        <section className="px-5 pt-5">
+        <section className="px-5 pt-5 md:col-span-6 md:px-0">
           <h2 className="mb-3 text-base font-semibold">Preferencias</h2>
           <div className="rounded-lg border border-border bg-card">
             {[
@@ -90,7 +90,7 @@ export default function PerfilPage() {
           </div>
         </section>
 
-        <section className="px-5 pt-5">
+        <section className="px-5 pt-5 md:col-span-12 md:px-0">
           <div className="flex items-start gap-3 rounded-lg border border-border bg-card p-4">
             <PrivacyIcon className="mt-0.5 size-5 shrink-0 text-primary" />
             <div>

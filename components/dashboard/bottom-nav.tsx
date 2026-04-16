@@ -17,9 +17,9 @@ interface BottomNavProps {
 
 export function BottomNav({ activeTab = "inicio" }: BottomNavProps) {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-md border-t border-border safe-area-bottom">
-      <div className="max-w-md mx-auto px-2">
-        <div className="flex items-center justify-around py-2">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-card/95 backdrop-blur-md safe-area-bottom md:bottom-auto md:right-auto md:top-0 md:h-screen md:w-24 md:border-r md:border-t-0 md:bg-card/70">
+      <div className="mx-auto max-w-md px-2 md:flex md:h-full md:max-w-none md:items-center md:px-0">
+        <div className="flex items-center justify-around py-2 md:w-full md:flex-col md:gap-2">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon
             const isActive = activeTab === item.id
@@ -29,7 +29,7 @@ export function BottomNav({ activeTab = "inicio" }: BottomNavProps) {
                 key={item.id}
                 href={item.href}
                 className={`
-                  flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition-all duration-200
+                  flex flex-col items-center gap-1 px-3 py-2 rounded-xl transition-all duration-200 md:w-20 md:py-3
                   ${isActive 
                     ? "text-primary" 
                     : "text-muted-foreground hover:text-foreground"

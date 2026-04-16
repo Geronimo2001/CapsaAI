@@ -11,22 +11,22 @@ const toneBySeverity: Record<string, string> = {
 
 export default function AlertasPage() {
   return (
-    <main className="min-h-screen bg-background pb-28 text-foreground">
-      <div className="mx-auto max-w-md">
-        <header className="sticky top-0 z-40 bg-background/92 px-5 pb-3 pt-4 backdrop-blur">
+    <main className="min-h-screen bg-background pb-28 text-foreground md:pb-10 md:pl-24">
+      <div className="mx-auto max-w-md md:grid md:max-w-5xl md:grid-cols-12 md:gap-5 md:px-8">
+        <header className="sticky top-0 z-40 bg-background/92 px-5 pb-3 pt-4 backdrop-blur md:static md:col-span-12 md:bg-transparent md:px-0 md:pb-1 md:pt-8 md:backdrop-blur-none">
           <p className="text-xs text-muted-foreground">CapsaAI</p>
-          <h1 className="text-xl font-semibold">Alertas</h1>
+          <h1 className="text-xl font-semibold md:text-3xl">Alertas</h1>
         </header>
 
-        <section className="px-5 pt-2">
-          <div className="rounded-lg border border-border bg-card p-4">
+        <section className="px-5 pt-2 md:col-span-4 md:px-0 md:pt-0">
+          <div className="rounded-lg border border-border bg-card p-4 md:sticky md:top-8">
             <p className="text-xs text-muted-foreground">Estado de gasto</p>
             <h2 className="mt-1 text-2xl font-semibold">4 eventos requieren revision</h2>
             <p className="mt-2 text-sm text-muted-foreground">Priorizadas por impacto en objetivo, duplicados y oportunidad cercana.</p>
           </div>
         </section>
 
-        <section className="px-5 pt-5">
+        <section className="px-5 pt-5 md:col-span-8 md:px-0 md:pt-0">
           <div className="space-y-2">
             {alerts.map((alert) => {
               const Icon = alert.icon
@@ -55,7 +55,7 @@ export default function AlertasPage() {
           </div>
         </section>
 
-        <section className="px-5 pt-5">
+        <section className="px-5 pt-5 md:col-span-8 md:col-start-5 md:px-0">
           <Link href="/gastos" className="flex items-center justify-between rounded-lg border border-border bg-card p-4">
             <div>
               <p className="font-medium">Revisar transacciones</p>

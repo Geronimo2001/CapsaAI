@@ -1,20 +1,20 @@
 import { CalendarHeatmap } from "@/components/dashboard/calendar-heatmap"
 import { BottomNav } from "@/components/dashboard/bottom-nav"
-import { categories, calendarDays, formatCurrency, getCategory, spendingSummary, transactions } from "@/lib/capsa-data"
+import { categories, calendarDays, formatCurrency, getCategory, linkedCards, spendingSummary, transactions } from "@/lib/capsa-data"
 
 export default function GastosPage() {
   const topDay = calendarDays.reduce((max, day) => (day.amount > max.amount ? day : max), calendarDays[0])
 
   return (
-    <main className="min-h-screen bg-background pb-28 text-foreground">
-      <div className="mx-auto max-w-md">
-        <header className="sticky top-0 z-40 bg-background/92 px-5 pb-3 pt-4 backdrop-blur">
+    <main className="min-h-screen bg-background pb-28 text-foreground md:pb-10 md:pl-24">
+      <div className="mx-auto max-w-md md:grid md:max-w-6xl md:grid-cols-12 md:gap-5 md:px-8">
+        <header className="sticky top-0 z-40 bg-background/92 px-5 pb-3 pt-4 backdrop-blur md:static md:col-span-12 md:bg-transparent md:px-0 md:pb-1 md:pt-8 md:backdrop-blur-none">
           <p className="text-xs text-muted-foreground">CapsaAI</p>
-          <h1 className="text-xl font-semibold">Gastos</h1>
+          <h1 className="text-xl font-semibold md:text-3xl">Gastos</h1>
         </header>
 
-        <section className="px-5 pt-2">
-          <div className="grid grid-cols-2 gap-2">
+        <section className="px-5 pt-2 md:col-span-4 md:px-0 md:pt-0">
+          <div className="grid grid-cols-2 gap-2 md:grid-cols-1">
             <div className="rounded-lg border border-border bg-card p-3">
               <p className="text-xs text-muted-foreground">Mayor dia</p>
               <p className="mt-1 text-xl font-semibold">{topDay.date} Abr</p>
@@ -28,13 +28,13 @@ export default function GastosPage() {
           </div>
         </section>
 
-        <section className="px-5 pt-5">
-          <CalendarHeatmap month="Abril" year={2026} days={calendarDays} />
+        <section className="px-5 pt-5 md:col-span-8 md:px-0 md:pt-0">
+          <CalendarHeatmap month="Abril" year={2026} days={calendarDays} cards={linkedCards} />
         </section>
 
-        <section className="px-5 pt-5">
-          <h2 className="mb-3 text-base font-semibold">Filtros activos</h2>
-          <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+        <section className="px-5 pt-5 md:col-span-12 md:px-0">
+          <h2 className="mb-3 text-base font-semibold">Categorias disponibles</h2>
+          <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide md:flex-wrap md:overflow-visible">
             {categories.map((category) => {
               const Icon = category.icon
 
@@ -48,12 +48,12 @@ export default function GastosPage() {
           </div>
         </section>
 
-        <section className="px-5 pt-5">
+        <section className="px-5 pt-5 md:col-span-12 md:px-0">
           <div className="mb-3 flex items-center justify-between">
             <h2 className="text-base font-semibold">Transacciones</h2>
             <span className="text-xs text-muted-foreground">{transactions.length} recientes</span>
           </div>
-          <div className="space-y-2">
+          <div className="space-y-2 md:grid md:grid-cols-2 md:gap-2 md:space-y-0">
             {transactions.map((transaction) => {
               const category = getCategory(transaction.category)
               const Icon = category.icon

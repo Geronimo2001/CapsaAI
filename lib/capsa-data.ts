@@ -126,7 +126,8 @@ export const calendarDays = Array.from({ length: 30 }, (_, index) => {
     transactions: dayTransactions.map((transaction) => ({
       name: transaction.merchant,
       amount: transaction.amount,
-      category: categories.find((category) => category.key === transaction.category)?.label ?? "Gasto",
+      category: transaction.category,
+      card: transaction.card,
     })),
   }
 })
