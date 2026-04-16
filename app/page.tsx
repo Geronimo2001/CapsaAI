@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useMemo, useState } from "react"
 import { Bell, CalendarDays, ChevronRight, CreditCard, Gauge, MapPin, Sparkles, Target } from "lucide-react"
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 import { BottomNav } from "@/components/dashboard/bottom-nav"
@@ -16,9 +17,18 @@ import {
 } from "@/lib/capsa-data"
 
 export default function HomePage() {
+  const [selectedCardLastFour, setSelectedCardLastFour] = useState<string | null>(null)
   const budgetProgress = Math.round((spendingSummary.totalSpend / spendingSummary.budget) * 100)
   const projectedOverage = spendingSummary.projectedSpend - spendingSummary.budget
-  const subscriptionTotal = subscriptions.reduce((total, subscription) => total + subscription.amount, 0)
+  const selectedCard = linkedCards.find((card) => card.lastFour === selectedCardLastFour)
+  const filteredSubscriptions = useMemo(() => {
+    if (!selectedCardLastFour) {
+      return subscriptions
+    }
+
+    return subscriptions.filter((subscription) => subscription.card.includes(selectedCardLastFour))
+  }, [selectedCardLastFour])
+  const subscriptionTotal = filteredSubscriptions.reduce((total, subscription) => total + subscription.amount, 0)
 
   return (
     <main className="min-h-screen bg-background pb-28 text-foreground md:pb-10 md:pl-24">
@@ -204,8 +214,19 @@ export default function HomePage() {
           </div>
           <div className="space-y-2">
             {linkedCards.map((card) => {
+              const isSelected = selectedCardLastFour === card.lastFour
+
               return (
-                <div key={card.lastFour} className="rounded-lg border border-border bg-card p-4">
+                <button
+                  key={card.lastFour}
+                  type="button"
+                  onClick={() => setSelectedCardLastFour(isSelected ? null : card.lastFour)}
+                  className={`w-full rounded-lg border bg-card p-4 text-left transition ${
+                    isSelected ? "border-primary ring-1 ring-primary/40" : "border-border hover:border-primary/40"
+                  }`}
+                  aria-pressed={isSelected}
+                  aria-label={`Filtrar suscripciones por ${card.name} terminada en ${card.lastFour}`}
+                >
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3">
                       <span className="flex size-10 items-center justify-center rounded-lg bg-secondary">
@@ -222,7 +243,7 @@ export default function HomePage() {
                     <span className="text-muted-foreground">{card.bestFor}</span>
                     <span className="text-primary">{card.nextBenefit}</span>
                   </div>
-                </div>
+                </button>
               )
             })}
           </div>
@@ -230,11 +251,27 @@ export default function HomePage() {
 
         <section className="px-5 pt-5 md:col-span-6 md:px-0">
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-base font-semibold">Suscripciones</h2>
-            <span className="text-xs font-medium text-primary">{formatCurrency(subscriptionTotal)}/mes</span>
+            <div>
+              <h2 className="text-base font-semibold">Suscripciones</h2>
+              {selectedCard ? (
+                <p className="text-xs text-muted-foreground">Filtradas por {selectedCard.name}</p>
+              ) : null}
+            </div>
+            <div className="text-right">
+              <span className="block text-xs font-medium text-primary">{formatCurrency(subscriptionTotal)}/mes</span>
+              {selectedCard ? (
+                <button
+                  type="button"
+                  onClick={() => setSelectedCardLastFour(null)}
+                  className="text-[11px] text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+                >
+                  Ver todas
+                </button>
+              ) : null}
+            </div>
           </div>
           <div className="rounded-lg border border-border bg-card">
-            {subscriptions.slice(0, 3).map((subscription, index) => (
+            {filteredSubscriptions.slice(0, 3).map((subscription, index) => (
               <div
                 key={subscription.name}
                 className={`flex items-center justify-between gap-3 p-3 ${index > 0 ? "border-t border-border" : ""}`}
@@ -249,6 +286,9 @@ export default function HomePage() {
                 </div>
               </div>
             ))}
+            {filteredSubscriptions.length === 0 ? (
+              <div className="p-4 text-sm text-muted-foreground">No hay suscripciones asociadas a esta tarjeta.</div>
+            ) : null}
           </div>
         </section>
 
